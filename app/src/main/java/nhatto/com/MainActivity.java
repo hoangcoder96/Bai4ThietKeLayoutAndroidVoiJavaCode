@@ -9,18 +9,68 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private LinearLayout linearLayoutRoot;
+    private RelativeLayout relativeLayoutRoot;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initLayoutbyLinear();
-        setContentView(linearLayoutRoot);
+//        initLayoutbyLinear();
+        initLayoutbyRelative();
+        setContentView(relativeLayoutRoot);
     }
 
+    public void initLayoutbyRelative(){
+        //RelativeLayoutRoot
+        relativeLayoutRoot = new RelativeLayout(this);
+
+        //RelativeLayoutSecond
+        RelativeLayout relativeLayoutSecond = new RelativeLayout(this);
+        RelativeLayout.LayoutParams reLayoutParamsScond = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        relativeLayoutSecond.setId(R.id.rl);
+
+        //ImageView
+        ImageView imgAvatar = new ImageView(this);
+        imgAvatar.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        imgAvatar.setId(R.id.imgAvatar);
+        imgAvatar.setImageResource(R.mipmap.ic_launcher);
+
+        //TextView
+        TextView tv = new TextView(this);
+        RelativeLayout.LayoutParams layoutParamsTv = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParamsTv.addRule(RelativeLayout.CENTER_VERTICAL);
+        layoutParamsTv.setMargins(20,0,0,0);
+        layoutParamsTv.addRule(RelativeLayout.RIGHT_OF,imgAvatar.getId());
+        tv.setText(getString(R.string.sologan));
+        tv.setLayoutParams(layoutParamsTv);
+
+        relativeLayoutSecond.addView(imgAvatar);
+        relativeLayoutSecond.addView(tv);
+
+        //ButtonClick
+        Button btnClick = new Button(this);
+        RelativeLayout.LayoutParams layoutParamsbtnClick = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParamsbtnClick.addRule(RelativeLayout.BELOW,relativeLayoutSecond.getId());
+        layoutParamsbtnClick.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        btnClick.setPadding(10,10,10,10);
+        btnClick.setText(getString(R.string.btnClick));
+
+        //ButtonHihi
+        Button btnHihi = new Button(this);
+        RelativeLayout.LayoutParams layoutParamsbtnHihi = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParamsbtnHihi.addRule(RelativeLayout.BELOW,relativeLayoutSecond.getId());
+        layoutParamsbtnHihi.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        btnHihi.setText(getString(R.string.btnHihi));
+
+        linearLayoutRoot.addView(relativeLayoutSecond,reLayoutParamsScond);
+        linearLayoutRoot.addView(btnClick,layoutParamsbtnClick);
+        linearLayoutRoot.addView(btnHihi,layoutParamsbtnHihi);
+    }
     public void initLayoutbyLinear(){
         // LinearLayoutRoot
         linearLayoutRoot = new LinearLayout(this);
